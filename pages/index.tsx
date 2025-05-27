@@ -10,7 +10,9 @@ interface HomeProps {
   // bg: string;
   cr: string;
 }
-export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (
+  context
+) => {
   const crParam = context.query.cr;
   const cr = Array.isArray(crParam) ? crParam[0] : crParam || "default";
   // const bg = `/themes/${cr}/001.webp`;
@@ -23,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (context)
   };
 };
 
-export default function Home({ bg, cr }:HomeProps) {
+export default function Home({ cr }: HomeProps) {
   const router = useRouter();
 
   useEffect(() => {
@@ -105,7 +107,7 @@ export default function Home({ bg, cr }:HomeProps) {
         <title>Indibet| Landing</title>
       </Head>
       <Layout>
-<Banner bg={bg} cr={cr} />
+        <Banner cr={cr} />
         <Featured />
         <OfferHighlight />
       </Layout>

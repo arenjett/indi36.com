@@ -5,7 +5,7 @@ import Link from "next/link";
 import OtpRegisterForm from "./OtpRegistration";
 import { useRouter } from "next/router";
 
-export default function Banner({ bg, cr }: { bg: string; cr: string }) {
+export default function Banner({ cr }: {  cr: string }) {
   // const router = useRouter();
   // const { cr } = router.query;
   // const [bg, setBackgroundImage] = useState<string | null>(null);
