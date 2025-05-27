@@ -5,43 +5,59 @@ import Link from "next/link";
 import OtpRegisterForm from "./OtpRegistration";
 import { useRouter } from "next/router";
 
-export default function Banner() {
-  const router = useRouter();
-  const { cr } = router.query;
-  const [bg, setBackgroundImage] = useState<string | null>(null);
+export default function Banner({ bg, cr }: { bg: string; cr: string }) {
+  // const router = useRouter();
+  // const { cr } = router.query;
+  // const [bg, setBackgroundImage] = useState<string | null>(null);
+   const [clientBg, setClientBg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (router.isReady) {
-      let folder = null;
-      if (cr === undefined) {
-        folder = "default";
+    const updateBg = () => {
+      const folder = cr || "default";
+      if (window.matchMedia("(orientation: portrait)").matches) {
+        setClientBg(`/themes/${folder}/002.webp`);
       } else {
-        folder = cr;
+        setClientBg(`/themes/${folder}/001.webp`);
       }
+    };
 
-      const setBgImageByOrientation = () => {
-        if (window.matchMedia("(orientation: portrait)").matches) {
-          setBackgroundImage(`/themes/${folder}/002.webp`);
-        } else {
-          setBackgroundImage(`/themes/${folder}/001.webp`);
-        }
-      };
-      setBgImageByOrientation();
-      window.addEventListener("resize", setBgImageByOrientation);
-      return () => {
-        window.removeEventListener("resize", setBgImageByOrientation);
-      };
-    }
-    // }
-  }, [cr,router.isReady]);
+    updateBg();
+    window.addEventListener("resize", updateBg);
+    return () => window.removeEventListener("resize", updateBg);
+  }, [cr]);
+
+  // useEffect(() => {
+  //   if (router.isReady) {
+  //     let folder = null;
+  //     if (cr === undefined) {
+  //       folder = "default";
+  //     } else {
+  //       folder = cr;
+  //     }
+
+  //     const setBgImageByOrientation = () => {
+  //       if (window.matchMedia("(orientation: portrait)").matches) {
+  //         setBackgroundImage(`/themes/${folder}/002.webp`);
+  //       } else {
+  //         setBackgroundImage(`/themes/${folder}/001.webp`);
+  //       }
+  //     };
+  //     setBgImageByOrientation();
+  //     window.addEventListener("resize", setBgImageByOrientation);
+  //     return () => {
+  //       window.removeEventListener("resize", setBgImageByOrientation);
+  //     };
+  //   }
+  //   // }
+  // }, [cr,router.isReady]);
 
   return (
     <section>
       {/* Mobile banner image */}
 
-      {bg && router?.isReady && (
+      {clientBg && (
         <Image
-          src={bg}
+          src={clientBg}
           alt="Banner"
           fill
           sizes="100vw"
@@ -54,9 +70,9 @@ export default function Banner() {
           <div className="md:w-[66%] w-full md:h-full" id="registration">
             {/* Medium to large banner image */}
             <div className=" md:w-[90%] w-full mx-auto md:block hidden md:h-[310px] md:h-full">
-              {bg && router?.isReady && (
+              {clientBg  && (
                 <Image
-                  src={bg}
+                  src={clientBg}
                   alt="banner"
                   fill
                   sizes="59vw"

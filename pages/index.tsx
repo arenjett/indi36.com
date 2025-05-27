@@ -2,11 +2,28 @@ import Banner from "@/Components/Banner";
 import Featured from "@/Components/Featured";
 import Layout from "@/Components/Layout";
 import OfferHighlight from "@/Components/OfferHighlight";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+interface HomeProps {
+  // bg: string;
+  cr: string;
+}
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
+  const crParam = context.query.cr;
+  const cr = Array.isArray(crParam) ? crParam[0] : crParam || "default";
+  // const bg = `/themes/${cr}/001.webp`;
 
-export default function Home() {
+  return {
+    props: {
+      // bg,
+      cr,
+    },
+  };
+};
+
+export default function Home({ bg, cr }:HomeProps) {
   const router = useRouter();
 
   useEffect(() => {
@@ -88,7 +105,7 @@ export default function Home() {
         <title>Indibet| Landing</title>
       </Head>
       <Layout>
-        <Banner />
+<Banner bg={bg} cr={cr} />
         <Featured />
         <OfferHighlight />
       </Layout>
