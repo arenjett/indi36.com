@@ -9,7 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const manifest = {
     name: "Indibet",
     short_name: "Indibet",
-    start_url: `/index2?${queryString}`,
+    start_url: `/?${queryString}`,
     scope: "/",
     display: "standalone",
     display_override: ["window-controls-overlay", "standalone"],
