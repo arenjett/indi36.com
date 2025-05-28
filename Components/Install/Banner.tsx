@@ -51,7 +51,7 @@ export default function Banner({
 
         <div className="info-block">
           <div className="main-up">
-            <div className="logo">
+            <div className="logo w-[25%]">
               <div className="box"></div>
               <Image
                 src="/assets/pwa/icon.webp"
