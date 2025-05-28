@@ -5,6 +5,7 @@ import OfferHighlight from "@/Components/OfferHighlight";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { useEffect } from "react";
 interface HomeProps {
   // bg: string;
@@ -105,6 +106,30 @@ export default function Home({ cr }: HomeProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Indibet| Landing</title>
+           <Script
+          src="https://cdn.jsdelivr.net/npm/yup"
+          strategy="afterInteractive"
+          onLoad={() => console.log("✅ Yup Loaded")}
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+          defer
+        ></script>
+        <Script
+          src="https://tracking.indi26.com/js/next_visit_tracking.js"
+          strategy="afterInteractive"
+          onLoad={() => console.log("✅ visit tracking loaded")}
+        />
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
+        {/* <script src="/assets/visit_tracking.js" defer /> */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+        />
+        <script
+          src="https://tracking.indi26.com/js/old-next-register.js"
+          defer
+        ></script>
       </Head>
       <Layout>
         <Banner cr={cr} />

@@ -38,30 +38,7 @@ export default function Document() {
           }}
         /> */}
         <link rel="icon" href="/indifavicon.webp" />
-        <Script
-          src="https://cdn.jsdelivr.net/npm/yup"
-          strategy="afterInteractive"
-          onLoad={() => console.log("✅ Yup Loaded")}
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
-          defer
-        ></script>
-        <Script
-          src="https://tracking.indi26.com/js/next_visit_tracking.js"
-          strategy="afterInteractive"
-          onLoad={() => console.log("✅ visit tracking loaded")}
-        />
-        <script src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
-        {/* <script src="/assets/visit_tracking.js" defer /> */}
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-        />
-        <script
-          src="https://tracking.indi26.com/js/old-next-register.js"
-          defer
-        ></script>
+     
       </Head>
       <body>
         {/* Google Tag Manager - NoScript */}
