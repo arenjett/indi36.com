@@ -95,7 +95,7 @@ export default function Banner({
                 <p className="whitespace-nowrap font-light">8M reviews</p>
               </li>
               <li>
-                <strong>10M +</strong>
+                <strong>12M +</strong>
                 <p className="whitespace-nowrap font-light">Downloads</p>
               </li>
               <li>
