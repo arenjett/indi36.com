@@ -20,15 +20,13 @@ interface BeforeInstallPromptEvent extends Event {
 const isAndroidDevice = () =>
   navigator.userAgent.toLowerCase().includes("android");
 
-
-
 const pushToDataLayer = (event: string, status: string, message: string) => {
   if (typeof window !== "undefined") {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event, status, message });
   }
 };
-const InstallPage = () => {
+const InstallPage = ({ manifestUrl }: { manifestUrl: string }) => {
   const [isInstallable, setIsInstallable] = useState(false);
   const [installAvailable, setInstallAvailable] = useState(false);
   const [deferredPrompt, setDeferredPrompt] =
@@ -267,6 +265,14 @@ const InstallPage = () => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Install</title>
+        <link rel="manifest" href={manifestUrl} />
+        <link
+          rel="preload"
+          href={manifestUrl}
+          as="fetch"
+          type="application/manifest+json"
+          crossOrigin="anonymous"
+        />
       </Head>
       <div className="mb-10">
         <Banner
@@ -342,3 +348,15 @@ const InstallPage = () => {
 };
 
 export default InstallPage;
+export async function getServerSideProps(context: any) {
+  const queryParams = new URLSearchParams(context.query).toString();
+  const manifestUrl = `https://${context.req.headers.host}/manifest.json${
+    queryParams ? `?${queryParams}` : ""
+  }`;
+
+  return {
+    props: {
+      manifestUrl,
+    },
+  };
+}
