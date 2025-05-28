@@ -20,7 +20,7 @@ export default function Document() {
             `,
           }}
         />
-        <Script
+        {/* <Script
           id="hotjar-script"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
@@ -36,7 +36,7 @@ export default function Document() {
     })(window, document, 'https://static.hj.contentsquare.net/c/csq-', '.js', 5243173);
             `,
           }}
-        />
+        /> */}
         <link rel="icon" href="/indifavicon.webp" />
         <Script
           src="https://cdn.jsdelivr.net/npm/yup"
