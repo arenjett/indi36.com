@@ -1,33 +1,32 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoMdStar } from "react-icons/io";
 
 export default function Banner({
-  handleInstall,
   isInstallable,
-  isChecking,
   isInstalling,
+  isChecking,
   progress,
+  everythingReady,
 }: {
-  handleInstall: () => void;
   isInstallable: boolean;
   isInstalling: boolean;
   isChecking: boolean;
   progress: number;
+  everythingReady: boolean;
+  installAvailable: boolean;
 }) {
-  // const startInstalling = () => {
-  //   handleInstall();
-  //   setIsInstalling(true);
-  //   let progressValue = 0;
-  //   const interval = setInterval(() => {
-  //     progressValue += 10; // Increment progress every second
-  //     setProgress(progressValue);
-  //     if (progressValue >= 100) {
-  //       clearInterval(interval);
-  //     }
-  //   }, 1000);
-  // };
+  const [waitCountdown, setWaitCountdown] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    if (waitCountdown === null) return;
+    if (waitCountdown <= 0) {
+      setWaitCountdown(null);
+      return;
+    }
+    const timer = setTimeout(() => setWaitCountdown(waitCountdown - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [waitCountdown]);
 
   const getLinkWithQueryParams = () => {
     const queryParams = window.location.search;
@@ -38,30 +37,27 @@ export default function Banner({
   return (
     <div className="box-head">
       <div className=" inner">
-        <div className="play-block  !w-screen">
-          <Image
-            src="/assets/pwa/banner.jpg"
+        <div className="play-block">
+          <img
+            src="https://ik.imagekit.io/d4jy2msiq/indi-pwa/banner.jpg?updatedAt=1746021249027"
             alt="banner"
-            fill
-            className="h-full w-full object-cover !relative"
+            className="h-full w-full  object-cover"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "/assets/pwa/banner.jpg";
+            }}
           />
           <div className="jaQz3d"></div>
         </div>
 
         <div className="info-block">
           <div className="main-up">
-            <div className="logo w-[25%]">
+            <div className="logo">
               <div className="box"></div>
-              <Image
-                src={"/assets/pwa/indibet.webp"}
+              <img
+                src="/assets/pwa/indibet.jpg"
                 alt="banner"
-                fill
-                priority
-                className="h-full  object-cover !relative"
-                // onError={(e) => {
-                //   e.currentTarget.onerror = null;
-                //   e.currentTarget.src = "/assets/pwa/icon.webp";
-                // }}
+                className="h-full w-full  object-cover"
               />
             </div>
             <div className="info">
@@ -76,17 +72,7 @@ export default function Banner({
           <div className="meta-block">
             <div className="logo">
               <div className="box"></div>
-              <Image
-                src={"/assets/pwa/indibet.webp"}
-                alt="banner"
-                fill
-                priority
-                className="h-full  object-cover !relative"
-                // onError={(e) => {
-                //   e.currentTarget.onerror = null;
-                //   e.currentTarget.src = "/assets/pwa/icon.webp";
-                // }}
-              />
+              <img src="/assets/pwa/indibet.jpg" alt="Indibet" />
             </div>
 
             <ul className="information-list">
@@ -110,64 +96,60 @@ export default function Banner({
             </ul>
           </div>
           <div className="other-block">
-            {!isChecking && (
-              <div className="shiny relative overflow-hidden ">
-                {
-                  isInstallable ? (
-                    !isInstalling ? (
-                      <button
-                        className="btn hover:bg-[#71ce3c]"
-                        onClick={handleInstall}
-                      >
-                        Install
-                      </button>
-                    ) : progress < 100 ? (
-                      <div className="progress-bar w-full bg-black min-w-[300px]">
-                        <div style={{ width: `${progress}%` }}></div>
-                        <span>{progress}%</span>
-                      </div>
-                    ) : (
-                      <Link href={getLinkWithQueryParams()} target="_blank">
-                        <button
-                          id="reInstall"
-                          className="btn hover:bg-[#71ce3c]"
-                        >
-                          Play
-                        </button>
-                      </Link>
-                    )
+            {everythingReady ? (
+              <div className="  relative overflow-hidden">
+                {isChecking ? (
+                  <div
+                    onClick={() => setWaitCountdown(8)}
+                    className="cursor-pointer"
+                  >
+                    <div className="border border-[#6df378] w-full relative overflow-hidden text-center text-white p-3 rounded-lg">
+                      <div className="absolute inset-0 animate-load shimmer-green"></div>
+                      <span className="relative z-10">
+                        {waitCountdown !== null
+                          ? `Please wait ${waitCountdown} sec`
+                          : "Loading..."}
+                      </span>
+                    </div>
+                  </div>
+                ) : isInstallable && !isInstalling ? (
+                  <button className="shiny btn hover:bg-[#01875f] w-full">
+                    Install
+                  </button>
+                ) : isInstalling ? (
+                  progress < 100 ? (
+                    <div className="progress-bar w-full bg-black">
+                      <div style={{ width: `${progress}%` }}></div>
+                      <span>{progress}%</span>
+                    </div>
                   ) : (
                     <Link href={getLinkWithQueryParams()} target="_blank">
-                      <button id="reInstall" className="btn hover:bg-[#71ce3c]">
-                        Play
+                      <button className=" shiny btn hover:bg-[#01875f] w-full">
+                        Play Now
                       </button>
                     </Link>
                   )
-                  // : (
-                  //   <Link href={"https://www.indibet.in/home?"} target="_blank">
-                  //     <button
-                  //       id="reInstall"
-                  //       className="btn hover:bg-[#71ce3c]"
-                  //       // onClick={openPWA}
-                  //       // onClick={handleInstall}
-                  //     >
-                  //       Play Now
-                  //     </button>
-                  //   </Link>
-                  // )
-                }
-                {/* <div id="installing" className="btn">
-                <div id="proess"></div>
-                <span id="count">0</span>
-                <span>%</span>
+                ) : (
+                  <Link href={getLinkWithQueryParams()} target="_blank">
+                    <button className=" shiny btn hover:bg-[#01875f] w-full">
+                      Play
+                    </button>
+                  </Link>
+                )}
               </div>
-              <button
-                id="play"
-                onClick={() => console.log("clicked")}
-                className="btn"
+            ) : (
+              <div
+                onClick={() => setWaitCountdown(8)}
+                className="cursor-pointer"
               >
-                Play
-              </button> */}
+                <div className="border border-[#6df378] w-full relative overflow-hidden text-center text-white p-3 rounded-lg">
+                  <div className="absolute inset-0 animate-load shimmer-green"></div>
+                  <span className="relative z-10">
+                    {waitCountdown !== null
+                      ? `Please wait ${waitCountdown} sec`
+                      : "Loading..."}
+                  </span>
+                </div>
               </div>
             )}
             <ul className="google-share-btns flex items-center justify-center text-[#6DF378] gap-[33px] lg:mt-0 mt-[15px]">
