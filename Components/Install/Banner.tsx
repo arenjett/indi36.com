@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoMdStar } from "react-icons/io";
@@ -37,15 +38,13 @@ export default function Banner({
   return (
     <div className="box-head">
       <div className=" inner">
-        <div className="play-block">
-          <img
-            src="https://ik.imagekit.io/d4jy2msiq/indi-pwa/banner.jpg?updatedAt=1746021249027"
+        <div className="play-block !w-screen">
+          <Image
+            src="/assets/pwa/banner.jpg"
             alt="banner"
-            className="h-full w-full  object-cover"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = "/assets/pwa/banner.jpg";
-            }}
+            fill
+            priority
+            className="h-full w-full object-cover !relative"
           />
           <div className="jaQz3d"></div>
         </div>
@@ -54,10 +53,12 @@ export default function Banner({
           <div className="main-up">
             <div className="logo">
               <div className="box"></div>
-              <img
-                src="/assets/pwa/indibet.jpg"
-                alt="banner"
-                className="h-full w-full  object-cover"
+              <Image
+                src="/assets/pwa/icon.webp"
+                alt="indibet icon"
+                fill
+                priority
+                className="h-full  object-cover !relative"
               />
             </div>
             <div className="info">
@@ -72,7 +73,17 @@ export default function Banner({
           <div className="meta-block">
             <div className="logo">
               <div className="box"></div>
-              <img src="/assets/pwa/indibet.jpg" alt="Indibet" />
+              <Image
+                src={"/assets/pwa/icon.webp"}
+                alt="banner"
+                fill
+                priority
+                className="h-full  object-cover !relative"
+                // onError={(e) => {
+                //   e.currentTarget.onerror = null;
+                //   e.currentTarget.src = "/assets/pwa/icon.webp";
+                // }}
+              />
             </div>
 
             <ul className="information-list">
