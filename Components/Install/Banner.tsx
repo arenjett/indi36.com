@@ -71,8 +71,8 @@ export default function Banner({
           </div>
 
           <div className="meta-block">
-            <div className="logo">
-              <div className="box"></div>
+            <div className="logo w-[25%]">
+              <div className="box"></div> 
               <Image
                 src={"/assets/pwa/icon.webp"}
                 alt="banner"
