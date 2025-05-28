@@ -40,7 +40,7 @@ export default function Banner({
       <div className=" inner">
         <div className="play-block !w-screen">
           <Image
-            src="/assets/pwa/banner.jpg"
+            src="/assets/pwa/banner.webp"
             alt="banner"
             fill
             priority
